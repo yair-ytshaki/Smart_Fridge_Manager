@@ -34,6 +34,8 @@ class DB_GroceryItem(Base):
     threshold_qty = Column(Integer, default=1)
     price_per_unit_avg = Column(Numeric(precision=10, scale=2), default=Decimal('0.00')) 
     last_purchase_date = Column(DateTime, default=datetime.now)
+    # NEW COLUMN: Expiration Date
+    expiration_date = Column(DateTime, nullable=True) # Date the item expires
 
     # Relationships
     inventory_items = relationship("DB_InventoryItem", back_populates="grocery_ref")

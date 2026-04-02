@@ -32,14 +32,22 @@ class InventoryManager:
         self.session.commit()
         return new_item
 
-    def add_inventory_stock(self, grocery_name: str, quantity: float, location_tag: str):
+    def add_inventory_stock(self, grocery_name: str, quantity: float, location_tag: str, expiration_date_str: str = None):
         """Adds a specific stock instance of a grocery item (e.g., '1 liter of Milk in the door')."""
     
         grocery_item = self.session.query(DB_GroceryItem).filter_by(name=grocery_name).first()
         if not grocery_item:
             print(f"Error: Grocery item '{grocery_name}' not found. Add it first.")
             return
-
+        
+        exp_date = None
+        if expiration_date_str:
+            try:
+                # Assuming input format is YYYY-MM-DD
+                exp_date = datetime.datetime.strptime(expiration_date_str, '%Y-%m-%d')
+            except ValueError:
+                print("Warning: Invalid expiration date format. Must be YYYY-MM-DD.")
+    
         # Check if item is on shopping list and remove it if stock is added
         self.remove_from_shopping_list(grocery_item.id)
         
@@ -49,7 +57,8 @@ class InventoryManager:
             current_quantity=Decimal(str(quantity)),
             location_tag=location_tag,
             status=ItemStatus.IN_STOCK,
-            last_scan_date=datetime.datetime.now()
+            last_scan_date=datetime.datetime.now(),
+            expiration_date=exp_date # NEW FIELD
         )
         
         self.session.add(new_stock)
@@ -153,7 +162,8 @@ class InventoryManager:
     # --- THRESHOLD CHECK (UPDATED for Persistence) ---
     
     def check_thresholds_and_update_shopping_list(self):
-        """Checks all inventory items against their defined thresholds and updates the persistent shopping list."""
+        """Checks all inventory items against their defined thresholds,
+         looks for expired items and updates the persistent shopping list."""
         
         print("\n--- Running Stock Check & Updating Shopping List ---")
         
@@ -203,6 +213,19 @@ class InventoryManager:
                 self.session.delete(list_item)
                 print(f"✅ RESTOCKED: '{list_item.grocery_ref_item.name}' stock is above threshold. Removed from list.")
                 
+            # --- NEW: Check for Expired Items ---
+        expired_items = self.session.query(DB_InventoryItem)\
+            .filter(DB_InventoryItem.expiration_date < datetime.datetime.now(), 
+                    DB_InventoryItem.status != ItemStatus.OUT_OF_STOCK)\
+            .options(joinedload(DB_InventoryItem.grocery_ref))\
+            .all()
+
+        for item in expired_items:
+            item.status = ItemStatus.EXPIRED
+            print(f"💀 EXPIRED: '{item.grocery_ref.name}' expired on {item.expiration_date.strftime('%Y-%m-%d')}.")
+            # Note: We usually don't add expired items to the shopping list, 
+            # but we update their status for user visibility.
+        
         self.session.commit()
         print(f"Shopping list reconciliation complete. Total items: {len(self.session.query(DB_ShoppingListItem).all())}.")
         print("----------------------------------------------------------\n")
@@ -340,3 +363,56 @@ class InventoryManager:
                 print(f"⚠️ {item_name} (Buy {suggested_qty:.0f}): No recent price data. Avg Price: {avg_price:.2f} NIS (Estimate)")
 
         print("-----------------------------\n")
+
+    def get_consumption_rate(self, grocery_name: str):
+        """Calculates the approximate consumption rate for a given grocery item based on inventory history.
+         Returns the estimated days (decimal) it takes to consume one unit of the item."""
+        
+        # 1. Get the Grocery Item ID
+        grocery_item = self.session.query(DB_GroceryItem).filter_by(name=grocery_name).first()
+        if not grocery_item:
+            return None, "Item not defined."
+            
+        # 2. Get historical stock records for this item, ordered by scan date
+        history = self.session.query(DB_InventoryItem)\
+            .filter(DB_InventoryItem.grocery_item_id == grocery_item.id)\
+            .order_by(DB_InventoryItem.last_scan_date.asc())\
+            .all()
+
+        if len(history) < 2:
+            return None, "Not enough historical data (minimum 2 scans/updates required)."
+
+        total_consumed = Decimal('0.0')
+        total_days = 0.0
+        
+        # 3. Analyze changes between consecutive scans to estimate consumption
+        for i in range(1, len(history)):
+            previous = history[i-1]
+            current = history[i]
+            
+            # Consumption is the difference in quantity, but only if quantity reduced
+            qty_change = previous.current_quantity - current.current_quantity
+            
+            if qty_change > Decimal('0.01'): # Only count significant consumption events
+                time_diff = current.last_scan_date - previous.last_scan_date
+                
+                # We attribute the consumption (qty_change) to the time between scans
+                days_passed = time_diff.total_seconds() / (60 * 60 * 24)
+                
+                if days_passed > 0:
+                    total_consumed += qty_change
+                    total_days += days_passed
+
+        if total_consumed == Decimal('0.0') or total_days == 0.0:
+            return 0.0, "No documented consumption recorded."
+
+        # Rate: Quantity consumed per day
+        rate_qty_per_day = total_consumed / Decimal(str(total_days))
+        
+        # Conversion to a more readable format: Days it takes to consume 1 unit
+        # (This is useful if size_per_unit is 1, e.g., 1 L of milk)
+        if rate_qty_per_day > 0:
+            days_per_unit = Decimal('1.0') / rate_qty_per_day
+            return float(days_per_unit), f"We consume one {grocery_item.unit_type.value} every {days_per_unit:.1f} days."
+        
+        return 0.0, "No documented consumption recorded."
