@@ -77,7 +77,8 @@ class InventoryManager:
         print("\n--- Current Inventory ---")
         for item in items:
             g = item.grocery_ref
-            print(f"Product: {g.name} | Qty: {item.current_quantity} {g.unit_type.value} | Loc: {item.location_tag} | Status: {item.status.value}")
+            exp_str = f" | Exp: {item.expiration_date.strftime('%Y-%m-%d')}" if item.expiration_date else ""
+            print(f"Product: {g.name} | Qty: {item.current_quantity} {g.unit_type.value} | Loc: {item.location_tag} | Status: {item.status.value}{exp_str}")
         print("-------------------------\n")
         return items
 

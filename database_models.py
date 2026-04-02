@@ -55,12 +55,13 @@ class DB_InventoryItem(Base):
     location_tag = Column(String)
     status = Column(Enum(ItemStatus), default=ItemStatus.IN_STOCK)
     last_scan_date = Column(DateTime, default=datetime.now)
+    expiration_date = Column(DateTime, nullable=True)  # Date this specific stock expires
 
     # Relationship
     grocery_ref = relationship("DB_GroceryItem", back_populates="inventory_items")
     
     def __repr__(self):
-        return f"<InventoryItem(name='{self.grocery_ref.name}', qty={self.current_quantity})>"
+        return f"<InventoryItem(name='{self.grocery_ref.name}', qty={self.current_quantity}, exp={self.expiration_date})>"
 
 
 class DB_PriceRecord(Base):

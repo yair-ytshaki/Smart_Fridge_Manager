@@ -1,22 +1,35 @@
 # --- main_app.py (Updated initialization section) ---
 
+import datetime
 from inventory_manager import InventoryManager
-from price_ingestion_manager import PriceIngestionManager # Import the new manager
-from database_models import UnitType, ItemStatus 
+from price_ingestion_manager import PriceIngestionManager
+from database_models import UnitType, ItemStatus
 
 def initialize_demo_data(manager: InventoryManager):
-    """Initializes basic definitions, stock, and price data for testing."""
+    """Initializes definitions, stock with expiration dates, and prices."""
     
     # 1. Grocery Definitions
-    manager.add_new_grocery_item("Milk 3%", UnitType.LITERS, 1.0, 1) # Threshold = 1 liter
-    manager.add_new_grocery_item("Whole Wheat Bread", UnitType.UNITS, 1.0, 2) # Threshold = 2 units
-    manager.add_new_grocery_item("Eggs (L)", UnitType.UNITS, 1.0, 6) # Threshold = 6 eggs
-    manager.add_new_grocery_item("Yogurt", UnitType.UNITS, 1.0, 3) # Threshold = 3 units
+    # manager.add_new_grocery_item("Milk 3%", UnitType.LITERS, 1.0, 1) # Threshold = 1 liter
+    # manager.add_new_grocery_item("Whole Wheat Bread", UnitType.UNITS, 1.0, 2) # Threshold = 2 units
+    # manager.add_new_grocery_item("Eggs (L)", UnitType.UNITS, 1.0, 6) # Threshold = 6 eggs
+    # manager.add_new_grocery_item("Yogurt", UnitType.UNITS, 1.0, 3) # Threshold = 3 units
+    manager.add_new_grocery_item("Milk 3%", UnitType.LITERS, 1.0, 1)
+    manager.add_new_grocery_item("Eggs (L)", UnitType.UNITS, 1.0, 6)
+    manager.add_new_grocery_item("Yogurt", UnitType.UNITS, 1.0, 3)
 
     # 2. Initial Stock
-    manager.add_inventory_stock("Milk 3%", 3.0, "Fridge Door")
-    manager.add_inventory_stock("Whole Wheat Bread", 5.0, "Freezer")
-    manager.add_inventory_stock("Eggs (L)", 12.0, "Egg Tray")
+    # manager.add_inventory_stock("Milk 3%", 3.0, "Fridge Door")
+    # manager.add_inventory_stock("Whole Wheat Bread", 5.0, "Freezer")
+    # manager.add_inventory_stock("Eggs (L)", 12.0, "Egg Tray")
+    # 2. Stock with Expiration Dates (Format: YYYY-MM-DD)
+    # Adding one item that is already expired for testing
+    manager.add_inventory_stock("Milk 3%", 2.0, "Fridge Door", "2024-01-01") 
+    manager.add_inventory_stock("Eggs (L)", 12.0, "Egg Tray", "2026-05-20")
+    manager.add_inventory_stock("Yogurt", 4.0, "Shelf A", "2026-04-15")
+    
+    # 3. Initial Prices
+    manager.process_price_update("Milk 3%", "Rami Levy", 5.90)
+    manager.process_price_update("Eggs (L)", "Mega", 15.00)
 
     # REMOVE initial price_update calls here, as the new Ingestion Manager will handle it.
     
@@ -48,11 +61,12 @@ def main_cli():
         print("2. Simulate CV Scan & Reconcile")
         print("3. View Shopping List & Price Recommendations")
         print("4. Add New Stock/New Item Definition")
-        print("5. Force Inventory Threshold Check")
-        print("6. RUN Daily Price Feed Ingestion & Cleanup 💰") # NEW OPTION
+        print("5. View Consumption Analytics 📊")
+        print("6. Force Inventory Threshold Check")
+        print("7. RUN Daily Price Feed Ingestion & Cleanup 💰") # NEW OPTION
         print("0. Exit Application")
         
-        choice = input("Enter choice (0-6): ")
+        choice = input("Enter choice (0-7): ")
 
         try:
             if choice == '1':
@@ -76,7 +90,11 @@ def main_cli():
                     {'name': 'Yogurt', 'quantity': 4.0, 'location': 'Door Shelf'}
                 ]
                 
-                manager.reconcile_inventory_snapshot(new_snapshot)
+                #manager.reconcile_inventory_snapshot(new_snapshot)
+
+                # Simulate consuming some milk to create a history for analytics
+                snapshot = [{'name': 'Milk 3%', 'quantity': 0.5, 'location': 'Shelf A'}]
+                manager.reconcile_inventory_snapshot(snapshot)
                 
             elif choice == '3':
                 manager.display_shopping_list()
@@ -108,12 +126,23 @@ def main_cli():
                 # Always prompt to add current stock
                 qty = float(input(f"Current Stock Quantity of {name} to add: "))
                 loc = input("Location (e.g., 'Shelf'): ")
-                manager.add_inventory_stock(name, qty, loc)
+                exp = input("Expiration Date (YYYY-MM-DD) or enter to skip: ")
+                manager.add_inventory_stock(name, qty, loc, exp if exp else None)
 
             elif choice == '5':
+                print("\n--- Consumption & Freshness Analytics ---")
+                items = manager.session.query(manager.db_manager.Base.metadata.tables['grocery_items']).all()
+                for item in items:
+                    rate, message = manager.get_consumption_rate(item.name)
+                    print(f"📈 {item.name}: {message}")
+                
+                # Trigger a threshold check to show expired warnings
+                manager.check_thresholds_and_update_shopping_list()
+                
+            elif choice == '6':
                  manager.check_thresholds_and_update_shopping_list()
 
-            elif choice == '6':
+            elif choice == '7':
                 price_manager.ingest_latest_feed(manager)
                 price_manager.clean_old_records(days_to_keep=7) # Keep 7 days of history for testing
             
@@ -123,7 +152,7 @@ def main_cli():
                 break
                 
             else:
-                print("Invalid choice. Please enter a number between 0 and 5.")
+                print("Invalid choice. Please enter a number between 0 and 7.")
         
         except ValueError:
             print("Invalid input. Please ensure quantities and choices are numbers.")
