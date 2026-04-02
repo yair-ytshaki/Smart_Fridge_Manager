@@ -1,0 +1,17 @@
+{
+    "name": "Smart Fridge Dev Environment",
+    "build": {
+        "dockerfile": "Dockerfile", "context": ".."
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    },
+    "postCreateCommand": "pip install -r requirements.txt",
+    "remoteUser": "root"
+}

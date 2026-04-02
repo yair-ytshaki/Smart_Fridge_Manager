@@ -1,0 +1,4 @@
+sqlalchemy
+il-supermarket-scraper
+il-supermarket-parser
+pandas

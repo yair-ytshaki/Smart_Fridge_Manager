@@ -1,0 +1,17 @@
+# Ignore Git
+.git
+.gitignore
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore local environment/DB stuff if you want a fresh start
+.venv
+venv/
+.env
+
+# Ignore VS Code settings
+.vscode/
+.devcontainer/
