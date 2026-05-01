@@ -2,18 +2,21 @@
 FROM python:3.10-slim
 
 # Install system dependencies (needed for some scrapers/OpenCV later)
+# Add wget to the installation list
 RUN apt-get update && apt-get install -y \
     build-essential \
     libsqlite3-dev \
+    wget \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory inside the container
 WORKDIR /workspaces/Smart_Fridge_Manager
 
-# Copy only the requirements first to leverage Docker caching
-COPY requirements.txt .
+# Use a wildcard to prevent the "not found" crash if the file is missing
+COPY requirements.txt* ./
 
-# Only run pip if the file actually exists
+# Install requirements if the file exists
 RUN if [ -f requirements.txt ]; then pip install --no-cache-dir -r requirements.txt; fi
 
 # Keep the container running

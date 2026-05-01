@@ -417,3 +417,32 @@ class InventoryManager:
             return float(days_per_unit), f"We consume one {grocery_item.unit_type.value} every {days_per_unit:.1f} days."
         
         return 0.0, "No documented consumption recorded."
+    
+    def search_product_prices(self, search_term: str):
+            """Searches for a product by name and returns its price stats and best deal."""
+            print(f"\n--- Price Investigation: '{search_term}' ---")
+            
+            # Search for the grocery item (case-insensitive partial match)
+            items = self.session.query(DB_GroceryItem)\
+                .filter(DB_GroceryItem.name.ilike(f"%{search_term}%")).all()
+
+            if not items:
+                print(f"No product found matching '{search_term}'.")
+                return
+
+            for item in items:
+                print(f"\nProduct: {item.name}")
+                print(f"Global Average Price: {item.price_per_unit_avg:.2f} NIS")
+                
+                # Find the absolute best price ever recorded for this specific item
+                best_deal = self.session.query(DB_PriceRecord)\
+                    .filter(DB_PriceRecord.grocery_item_id == item.id)\
+                    .order_by(DB_PriceRecord.item_price.asc()).first()
+                
+                if best_deal:
+                    print(f"🏆 Best Deal Found: {best_deal.item_price:.2f} NIS at {best_deal.store_name}")
+                    if best_deal.is_offer:
+                        print(f"   Details: {best_deal.offer_details}")
+                else:
+                    print("   No specific store price records found yet.")
+            print("------------------------------------------")

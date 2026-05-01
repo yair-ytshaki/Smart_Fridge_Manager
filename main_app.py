@@ -60,13 +60,14 @@ def main_cli():
         print("1. View Full Inventory")
         print("2. Simulate CV Scan & Reconcile")
         print("3. View Shopping List & Price Recommendations")
-        print("4. Add New Stock/New Item Definition")
+        print("4. Add New Stock/New Item Definition ➕")
         print("5. View Consumption Analytics 📊")
         print("6. Force Inventory Threshold Check")
         print("7. RUN Daily Price Feed Ingestion & Cleanup 💰") # NEW OPTION
+        print("8. Search Product Price Stats 🔎")
         print("0. Exit Application")
         
-        choice = input("Enter choice (0-7): ")
+        choice = input("Enter choice (0-8): ")
 
         try:
             if choice == '1':
@@ -146,6 +147,10 @@ def main_cli():
                 price_manager.ingest_latest_feed(manager)
                 price_manager.clean_old_records(days_to_keep=7) # Keep 7 days of history for testing
             
+            elif choice == '8':
+                term = input("Enter product name to search: ")
+                manager.search_product_prices(term)
+
             elif choice == '0':
                 manager.close()
                 print("Exiting application. Goodbye!")
