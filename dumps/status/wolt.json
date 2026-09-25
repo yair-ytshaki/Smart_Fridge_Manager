@@ -1,0 +1,179 @@
+{
+    "20260528144015": [
+        {
+            "status": "started",
+            "when": "2026-05-28 14:40:15.123328+03:00",
+            "limit": 1,
+            "files_requested": [
+                "PROMO_FILE",
+                "STORE_FILE",
+                "PRICE_FILE",
+                "PROMO_FULL_FILE",
+                "PRICE_FULL_FILE"
+            ],
+            "store_id": null,
+            "files_names_to_scrape": null,
+            "when_date": null,
+            "filter_nul": false,
+            "filter_zero": false,
+            "suppress_exception": false
+        },
+        {
+            "status": "collected",
+            "when": "2026-05-28 14:40:40.210194+03:00",
+            "file_name_collected_from_site": [
+                "Stores7290058249350-000-20260528-000011.gz"
+            ],
+            "links_collected_from_site": [
+                "https://wm-gateway.wolt.com/isr-prices/public/v1/download/2026-05-28/Stores7290058249350-000-20260528-000011.gz"
+            ]
+        },
+        {
+            "status": "downloaded",
+            "when": "2026-05-28 14:40:41.372651+03:00",
+            "results": [
+                {
+                    "file_name": "Stores7290058249350-000-20260528-000011.gz",
+                    "downloaded": true,
+                    "extract_succefully": true,
+                    "error": null,
+                    "restart_and_retry": false
+                }
+            ]
+        },
+        {
+            "status": "estimated_size",
+            "when": "2026-05-28 14:40:41.549396+03:00",
+            "folder_size": {
+                "size": 8742,
+                "unit": "MB",
+                "folder": "dumps/Wolt",
+                "folder_content": [
+                    "dumps/Wolt/Stores7290058249350-000-20260528-000011.xml"
+                ]
+            },
+            "completed_successfully": true
+        }
+    ],
+    "20260923154951": [
+        {
+            "status": "started",
+            "when": "2026-09-23 15:49:51.757443+03:00",
+            "limit": 1,
+            "files_requested": [
+                "PRICE_FULL_FILE"
+            ],
+            "store_id": null,
+            "files_names_to_scrape": null,
+            "when_date": null,
+            "filter_nul": false,
+            "filter_zero": false,
+            "suppress_exception": false
+        },
+        {
+            "status": "collected",
+            "when": "2026-09-23 15:50:13.820917+03:00",
+            "file_name_collected_from_site": [
+                "PriceFull7290058249350-000-043-20260923-000046.gz"
+            ],
+            "links_collected_from_site": [
+                "https://wm-gateway.wolt.com/isr-prices/public/v1/download/2026-09-23/PriceFull7290058249350-000-043-20260923-000046.gz"
+            ]
+        },
+        {
+            "status": "downloaded",
+            "when": "2026-09-23 15:50:55.611148+03:00",
+            "results": [
+                {
+                    "file_name": "PriceFull7290058249350-000-043-20260923-000046.gz",
+                    "downloaded": true,
+                    "extract_succefully": true,
+                    "error": null,
+                    "restart_and_retry": false
+                }
+            ]
+        },
+        {
+            "status": "estimated_size",
+            "when": "2026-09-23 15:50:55.685620+03:00",
+            "folder_size": {
+                "size": 4172263,
+                "unit": "MB",
+                "folder": "dumps/Wolt",
+                "folder_content": [
+                    "dumps/Wolt/PriceFull7290058249350-000-043-20260923-000046.xml",
+                    "dumps/Wolt/Stores7290058249350-000-20260528-000011.xml"
+                ]
+            },
+            "completed_successfully": true
+        }
+    ],
+    "20260923160537": [
+        {
+            "status": "started",
+            "when": "2026-09-23 16:05:37.451060+03:00",
+            "limit": 1,
+            "files_requested": [
+                "PRICE_FULL_FILE"
+            ],
+            "store_id": null,
+            "files_names_to_scrape": null,
+            "when_date": null,
+            "filter_nul": false,
+            "filter_zero": false,
+            "suppress_exception": false
+        },
+        {
+            "status": "collected",
+            "when": "2026-09-23 16:05:48.206809+03:00",
+            "file_name_collected_from_site": [
+                "PriceFull7290058249350-000-042-20260923-000012.gz"
+            ],
+            "links_collected_from_site": [
+                "https://wm-gateway.wolt.com/isr-prices/public/v1/download/2026-09-23/PriceFull7290058249350-000-042-20260923-000012.gz"
+            ]
+        },
+        {
+            "status": "downloaded",
+            "when": "2026-09-23 16:05:49.137462+03:00",
+            "results": [
+                {
+                    "file_name": "PriceFull7290058249350-000-042-20260923-000012.gz",
+                    "downloaded": true,
+                    "extract_succefully": true,
+                    "error": null,
+                    "restart_and_retry": false
+                }
+            ]
+        },
+        {
+            "status": "estimated_size",
+            "when": "2026-09-23 16:05:49.275876+03:00",
+            "folder_size": {
+                "size": 4172445,
+                "unit": "MB",
+                "folder": "dumps/Wolt",
+                "folder_content": [
+                    "dumps/Wolt/PriceFull7290058249350-000-042-20260923-000012.xml",
+                    "dumps/Wolt/PriceFull7290058249350-000-043-20260923-000046.xml",
+                    "dumps/Wolt/Stores7290058249350-000-20260528-000011.xml"
+                ]
+            },
+            "completed_successfully": true
+        }
+    ],
+    "verified_downloads": [
+        {
+            "file_name": "Stores7290058249350-000-20260528-000011.gz",
+            "when": "2026-05-28 14:40:41.467351+03:00"
+        },
+        {
+            "file_name": "PriceFull7290058249350-000-043-20260923-000046.gz",
+            "when": "2026-09-23 15:50:55.631944+03:00"
+        },
+        {
+            "file_name": "PriceFull7290058249350-000-042-20260923-000012.gz",
+            "when": "2026-09-23 16:05:49.183628+03:00"
+        }
+    ]
+}

@@ -1,0 +1,119 @@
+{
+    "20260528134756": [
+        {
+            "status": "started",
+            "when": "2026-05-28 13:47:56.151005+03:00",
+            "limit": 1,
+            "files_requested": [
+                "PROMO_FILE",
+                "STORE_FILE",
+                "PRICE_FILE",
+                "PROMO_FULL_FILE",
+                "PRICE_FULL_FILE"
+            ],
+            "store_id": null,
+            "files_names_to_scrape": null,
+            "when_date": null,
+            "filter_nul": false,
+            "filter_zero": false,
+            "suppress_exception": false
+        },
+        {
+            "status": "fail",
+            "when": "2026-05-28 13:48:10.809390+03:00",
+            "execption": "504 Command not implemented for that parameter",
+            "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/engines/cerberus.py\", line 55, in _scrape\n    files = self.collect_files_details_from_site(\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/engines/cerberus.py\", line 133, in collect_files_details_from_site\n    filter_files = collect_from_ftp(\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/connection.py\", line 87, in outer_wrapper\n    return retry_decorated_func(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/decorator.py\", line 235, in fun\n    return caller(func, *(extras + args), **kw)\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/retry.py\", line 137, in retry_decorator\n    return __retry_internal(\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/retry.py\", line 70, in __retry_internal\n    return func(timeout=_timeout)\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/connection.py\", line 105, in retry_decorated_func\n    return func(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/connection.py\", line 393, in collect_from_ftp\n    ftp_session = FTP_TLS(ftp_host, ftp_username, ftp_password, timeout=timeout)\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 740, in __init__\n    super().__init__(host, user, passwd, acct,\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 123, in __init__\n    self.login(user, passwd, acct)\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 745, in login\n    self.auth()\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 753, in auth\n    resp = self.voidcmd('AUTH TLS')\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 286, in voidcmd\n    return self.voidresp()\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 259, in voidresp\n    resp = self.getresp()\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 254, in getresp\n    raise error_perm(resp)\nftplib.error_perm: 504 Command not implemented for that parameter\n",
+            "download_urls": [],
+            "file_names": []
+        },
+        {
+            "status": "estimated_size",
+            "when": "2026-05-28 13:48:10.900639+03:00",
+            "folder_size": {
+                "size": 0,
+                "unit": "MB",
+                "folder": "dumps/RamiLevy",
+                "folder_content": []
+            },
+            "completed_successfully": true
+        }
+    ],
+    "20260528135646": [
+        {
+            "status": "started",
+            "when": "2026-05-28 13:56:46.728184+03:00",
+            "limit": 1,
+            "files_requested": [
+                "PROMO_FILE",
+                "STORE_FILE",
+                "PRICE_FILE",
+                "PROMO_FULL_FILE",
+                "PRICE_FULL_FILE"
+            ],
+            "store_id": null,
+            "files_names_to_scrape": null,
+            "when_date": null,
+            "filter_nul": false,
+            "filter_zero": false,
+            "suppress_exception": false
+        },
+        {
+            "status": "fail",
+            "when": "2026-05-28 13:57:01.219670+03:00",
+            "execption": "504 Command not implemented for that parameter",
+            "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/engines/cerberus.py\", line 55, in _scrape\n    files = self.collect_files_details_from_site(\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/engines/cerberus.py\", line 133, in collect_files_details_from_site\n    filter_files = collect_from_ftp(\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/connection.py\", line 87, in outer_wrapper\n    return retry_decorated_func(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/decorator.py\", line 235, in fun\n    return caller(func, *(extras + args), **kw)\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/retry.py\", line 137, in retry_decorator\n    return __retry_internal(\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/retry.py\", line 70, in __retry_internal\n    return func(timeout=_timeout)\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/connection.py\", line 105, in retry_decorated_func\n    return func(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/connection.py\", line 393, in collect_from_ftp\n    ftp_session = FTP_TLS(ftp_host, ftp_username, ftp_password, timeout=timeout)\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 740, in __init__\n    super().__init__(host, user, passwd, acct,\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 123, in __init__\n    self.login(user, passwd, acct)\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 745, in login\n    self.auth()\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 753, in auth\n    resp = self.voidcmd('AUTH TLS')\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 286, in voidcmd\n    return self.voidresp()\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 259, in voidresp\n    resp = self.getresp()\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 254, in getresp\n    raise error_perm(resp)\nftplib.error_perm: 504 Command not implemented for that parameter\n",
+            "download_urls": [],
+            "file_names": []
+        },
+        {
+            "status": "estimated_size",
+            "when": "2026-05-28 13:57:01.349028+03:00",
+            "folder_size": {
+                "size": 0,
+                "unit": "MB",
+                "folder": "dumps/RamiLevy",
+                "folder_content": []
+            },
+            "completed_successfully": true
+        }
+    ],
+    "20260528135921": [
+        {
+            "status": "started",
+            "when": "2026-05-28 13:59:21.508798+03:00",
+            "limit": 1,
+            "files_requested": [
+                "PROMO_FILE",
+                "STORE_FILE",
+                "PRICE_FILE",
+                "PROMO_FULL_FILE",
+                "PRICE_FULL_FILE"
+            ],
+            "store_id": null,
+            "files_names_to_scrape": null,
+            "when_date": null,
+            "filter_nul": false,
+            "filter_zero": false,
+            "suppress_exception": false
+        },
+        {
+            "status": "fail",
+            "when": "2026-05-28 14:01:00.596788+03:00",
+            "execption": "[Errno 111] Connection refused",
+            "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/engines/cerberus.py\", line 55, in _scrape\n    files = self.collect_files_details_from_site(\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/engines/cerberus.py\", line 133, in collect_files_details_from_site\n    filter_files = collect_from_ftp(\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/connection.py\", line 87, in outer_wrapper\n    return retry_decorated_func(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/decorator.py\", line 235, in fun\n    return caller(func, *(extras + args), **kw)\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/retry.py\", line 137, in retry_decorator\n    return __retry_internal(\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/retry.py\", line 70, in __retry_internal\n    return func(timeout=_timeout)\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/connection.py\", line 105, in retry_decorated_func\n    return func(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/il_supermarket_scarper/utils/connection.py\", line 398, in collect_from_ftp\n    files = ftp_session.nlst(arg)\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 553, in nlst\n    self.retrlines(cmd, files.append)\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 462, in retrlines\n    with self.transfercmd(cmd) as conn, \\\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 393, in transfercmd\n    return self.ntransfercmd(cmd, rest)[0]\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 793, in ntransfercmd\n    conn, size = super().ntransfercmd(cmd, rest)\n  File \"/usr/local/lib/python3.10/ftplib.py\", line 354, in ntransfercmd\n    conn = socket.create_connection((host, port), self.timeout,\n  File \"/usr/local/lib/python3.10/socket.py\", line 857, in create_connection\n    raise err\n  File \"/usr/local/lib/python3.10/socket.py\", line 845, in create_connection\n    sock.connect(sa)\nConnectionRefusedError: [Errno 111] Connection refused\n",
+            "download_urls": [],
+            "file_names": []
+        },
+        {
+            "status": "estimated_size",
+            "when": "2026-05-28 14:01:00.660824+03:00",
+            "folder_size": {
+                "size": 0,
+                "unit": "MB",
+                "folder": "dumps/RamiLevy",
+                "folder_content": []
+            },
+            "completed_successfully": true
+        }
+    ]
+}
